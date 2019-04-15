@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class NoteServiceImpl implements NoteService{
+public class NoteServiceImpl implements NoteService {
 
     private final NoteRepository noteRepository;
 
@@ -28,7 +28,7 @@ public class NoteServiceImpl implements NoteService{
 
     @Override
     public void delete(long id) {
-       noteRepository.deleteById(id);
+        noteRepository.deleteById(id);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class NoteServiceImpl implements NoteService{
         } else if (filterNoteText != null && !filterNoteText.isEmpty()) {
             Stream<Note> stream = notes.stream().filter(note -> note.getNoteText().contains(filterNoteText));
             notes = stream.collect(Collectors.toList());
-        }else {
+        } else {
             notes = getAll();
         }
         return notes;
