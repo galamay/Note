@@ -1,4 +1,4 @@
-package com.example.note.domain;
+package com.task.note.domain;
 
 import javax.persistence.*;
 

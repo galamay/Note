@@ -1,9 +1,6 @@
-package com.example.note.controller;
+package com.task.note.controller;
 
-
-import com.example.note.domain.Note;
-import com.example.note.repository.NoteRepository;
-import com.example.note.service.NoteService;
+import com.task.note.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class NoteController {
-    @Autowired
-    NoteRepository noteRepository;
+
+    private final NoteService noteService;
 
     @Autowired
-    NoteService noteService;
+    NoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 
     @GetMapping("/note")
     public String main(
@@ -26,36 +25,27 @@ public class NoteController {
             @RequestParam(required = false, defaultValue = "") String filterNoteText,
             Model model
     ) {
-        Iterable<Note> notes = noteRepository.findAll();
-
-        if ((filterHeadline != null && !filterHeadline.isEmpty()) ||
-                (filterNoteText != null && !filterNoteText.isEmpty())) {
-            notes = noteService.search(filterHeadline, filterNoteText, notes);
-        } else {
-            notes = noteRepository.findAll();
-        }
-
-        model.addAttribute("notes", notes);
+        noteService.view(noteService.findByHeadlineOrNoteText(filterHeadline, filterNoteText), model);
         return "note";
     }
 
     @PostMapping("/note")
     public String add(
             @RequestParam String headline,
-            @RequestParam String noteText, Model model
+            @RequestParam String noteText,
+            Model model
     ) {
-        Note note = new Note(headline, noteText);
-        noteRepository.save(note);
-        Iterable<Note> notes = noteRepository.findAll();
-        model.addAttribute("notes", notes);
+        noteService.addNote(headline, noteText);
+        noteService.view(noteService.getAll(), model);
         return "note";
     }
+
 
     @GetMapping("/del/{id}")
     public String delete(
             @PathVariable("id") Long id
     ) {
-        noteRepository.deleteById(id);
+        noteService.delete(id);
         return "redirect:/note";
     }
 }
