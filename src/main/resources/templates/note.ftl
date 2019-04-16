@@ -1,13 +1,12 @@
 <#import "parts/comon.ftl" as c>
 
 <@c.page>
-    <div class="form-row">
+    <div class="form-row" xmlns="http://www.w3.org/1999/html">
         <div class="form-group col-ml-8">
             <form method="get" action="/note" class="form-inline">
                 <input type="text" name="filterHeadline" class="form-control" value="${filterHeadline?ifExists}"
                        placeholder="Поиск по заголовку"/>
-                <button type="submit" class="btn btn-primary ml-2">Поиск</
-                >
+                <button type="submit" class="btn btn-primary ml-2">Поиск</button>
             </form>
         </div>
         <div class="form-group col-ml-8">
@@ -30,7 +29,7 @@
                            placeholder="Введите заголовок (не более 100 символов)"/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="noteText" maxlength="1000"
+                    <input type="text" class="form-control" name="noteText" required maxlength="1000"
                            placeholder="Текст заметки (не более 1000 символов)"/>
                 </div>
                 <div class="form-group">
