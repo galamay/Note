@@ -29,7 +29,7 @@
                            placeholder="Введите заголовок (не более 100 символов)"/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="noteText" required maxlength="1000"
+                    <input type="text" class="form-control" name="noteText" required="true" maxlength="1000"
                            placeholder="Текст заметки (не более 1000 символов)"/>
                 </div>
                 <div class="form-group">
@@ -38,15 +38,15 @@
             </form>
         </div>
     </div>
-    <div class="card-columns">
+    <div class="card-columns" id="note-list">
         <#list notes as note>
-            <div class="card my-3">
+            <div class="card my-3" id="${note.id}">
                 <div class="m-2">
                     <div class="card-header">
                         <i>
                             ${note.headline}
                             <button type="button" class="close" aria-label="Close">
-                                <span aria-hidden="true"><a href="/del/${note.id}">&times;</a></span>
+                                <span aria-hidden="true"><a href="/del/${note.id}">&#10008;</a></span>
                             </button>
                         </i>
                     </div>
